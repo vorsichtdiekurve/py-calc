@@ -5,6 +5,7 @@ This application calculates the sum of two integers.
 """
 
 from flask import Flask, request
+from calculator import Calculator
 
 app = Flask(__name__)
 
@@ -18,10 +19,23 @@ def calculate():
     """
 
     op = request.args.get('op', type=str)
-    arg1 = request.args.get('arg1', type=int)
-    arg2 = request.args.get('arg2', type=int)
+    arg1 = request.args.get('arg1', type=float)
+    arg2 = request.args.get('arg2', type=float)
+
     if op == 'sum':
-        return f"{arg1} + {arg2} = {arg1 + arg2}"
+        return f"{arg1} + {arg2} = {Calculator(arg1, arg2).sum()}"
+
+    if op == 'subtract':
+        return f"{arg1} - {arg2} = {Calculator(arg1, arg2).subtract()}"
+
+    if op == 'multiply':
+        return f"{arg1} * {arg2} = {Calculator(arg1, arg2).multiply()}"
+
+    if op == 'divide':
+        if arg2 != 0:
+            return f"{arg1} / {arg2} = {Calculator(arg1, arg2).divide()}"
+
+        return "Division by zero is not allowed"
 
     return "Invalid operation"
 
