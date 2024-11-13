@@ -32,10 +32,10 @@ def calculate():
         return f"{arg1} * {arg2} = {Calculator(arg1, arg2).multiply()}"
 
     if op == 'divide':
-        if arg2 != 0:
+        try:
             return f"{arg1} / {arg2} = {Calculator(arg1, arg2).divide()}"
-
-        return "Division by zero is not allowed"
+        except ZeroDivisionError:
+            return "Division by zero is not allowed"
 
     return "Invalid operation"
 
